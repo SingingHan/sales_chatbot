@@ -57,8 +57,12 @@ def init_chain():
     chain1 = create_stuff_documents_chain(llm=model, prompt=prompt_template) # 将检索到的结果(多个docs)输入到提示模板中
     chain = create_retrieval_chain(retriever=retriever, combine_docs_chain=chain1)
 
+    return chain
 
 
 if __name__ == '__main__':
+    save_vectors_db()
 
-
+    chain = init_chain()
+    res = chain.invoke({"input": "小区里面有绿化吗？"})
+    print(res['answer'])
